@@ -35,7 +35,7 @@ List the Docker images:
     REPOSITORY  TAG    IMAGE ID     CREATED             SIZE
     jenkins  terraform  9bbba16ad133   3 minutes ago   1.41GB
 
-Deploy container from custom jenkins image, with container and host volumes
+# Deploy container from custom jenkins image, with container and host volumes
 We'll create a main file and fill it with docker container and docker volume resources.
  Note how there is a special bind mount volume resource. This is to enable our jenkins container to be able to spin up other containers on the host.
 
