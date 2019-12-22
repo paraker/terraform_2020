@@ -1,5 +1,17 @@
+# Overview
+Creates:
+* vpc
+* internet gateway
+* private and public route tables
+* private and public redundant subnets
+* route table associations
+* security groups
+
 # Usage
 
+Plan: 9 to add, 0 to change, 0 to destroy.
+
+# Introduced concepts
 ## Terraform Count - DRY - Don't Repeat Yourself
 The count parameter on resources can simplify configurations and let you scale resources by simply incrementing a number.<br>
 Starts with 0 and counts upwards. <br>
@@ -23,6 +35,27 @@ Use count.index to interpolate the current iteration such as below.
         # Just a pure reference to the count, add 1 to get human friendly names
         Name = "tf_public_${count.index + 1}"
       }
+      
+To masterfully match the count variables in other resources we can interpolate the count definition.<br>
+The syntax to refer to counted resources has a special * syntax, see below example
+
+    resource "aws_route_table_association" "tf_public_assoc" { 
+      # Reference to previously defined count. So you match the same count value. DRY
+      count = "${aws_subnet.tf_public_subnet.count}"
+      
+      # Reference to the counted subnet ids is done with *.id[count.index]
+      # Translates to tf_public_subnet.0.id then tf_public_subnet.1.id
+      subnet_id = "${aws_subnet.tf_public_subnet.*.id[count.index]}"
+      route_table_id = "${aws_route_table.tf_public_rt.id}"
+    }
+    
+The same approach iteration * syntax is used for outputs when dealing with counted resources.
+
+    # Use count iteration for the counted resource "tf_public_subnet"
+    # to get all subnets cidr_blocks one output block
+    output "subnet_ips" {
+      value = "${aws_subnet.tf_public_subnet.*.cidr_block}"
+    }
 
 Examples found at: https://github.com/terraform-providers/terraform-provider-aws/tree/master/examples/count
 
@@ -34,5 +67,12 @@ Providers are responsible in Terraform for defining and implementing data source
 For example, a data source may retrieve remote state data from a Terraform Cloud workspace, configuration information from Consul, or look up a pre-existing AWS resource by filtering on its attributes and tags.
 
 Each data instance will export one or more attributes, which can be interpolated into other resources using variables of the form data.TYPE.NAME.ATTR.
+
+    # declaration
+    data "aws_availability_zones" "available" {}
+    
+    # interpolation
+    availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
+
 
 Official documentation: https://www.terraform.io/docs/configuration-0-11/data-sources.html
