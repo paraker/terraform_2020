@@ -9,9 +9,12 @@ Use count.index to interpolate the current iteration such as below.
     resource "aws_subnet" "tf_public_subnet" {
       count = 2
       vpc_id = "${aws_vpc.tf_vpc.id}"
-      cidr_block = "${var.public_cidrs[count.index]}"  # public_cidrs is a list, index.count decides the index to use in the list
-      map_public_ip_on_launch = true  # Give a public ip and private ip to all containers in this subnet
-      availability_zone = "${data.aws_availability_zones.avaialble.names[count.index]}"  # Names is also a list, count sets index in the list
+      # public_cidrs is a list, index.count decides the index to use in the list
+      cidr_block = "${var.public_cidrs[count.index]}"
+      # Give a public ip and private ip to all containers in this subnet
+      map_public_ip_on_launch = true
+      # Names is also a list, count sets index in the list
+      availability_zone = "${data.aws_availability_zones.avaialble.names[count.index]}"
     
       tags {
         Name = "tf_public_${count.index + 1}"  # Just a pure reference to the count, add 1 to get human friendly names
