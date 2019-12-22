@@ -8,6 +8,12 @@ Creates:
 * security groups
 
 # Usage
+    module "networking" {
+      source       = "./modules/networking"
+      vpc_cidr     = "${var.<vpc cidr range>}"
+      public_cidrs = "${var.<public cidrs>}"
+      accessip     = "${var.<IPs to get access to your public services>}" 
+    }
 
 Plan: 9 to add, 0 to change, 0 to destroy.
 
