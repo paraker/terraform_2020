@@ -4,9 +4,9 @@ Utilises terraform.tfvars to set variables for easy plan/apply.
 
 Assumes these three variables are set:
 
-    AWS_ACCESS_KEY_ID=AKIAS73XKAPGVWJFG
-    AWS_SECRET_ACCESS_KEY=bq6S2RswnAMP4yWR+H6lIgqVMuBKcHORP2y
-    AWS_DEFAULT_REGION=us-east-1
+    export AWS_ACCESS_KEY_ID="AKIAQL27H7VF66VV25S3"
+    export AWS_SECRET_ACCESS_KEY="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"
+    export AWS_DEFAULT_REGION=us-east-1
 
 # Architecture
 ![Architecture](pictures/architecture.png)
