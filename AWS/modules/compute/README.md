@@ -1,11 +1,8 @@
 # Overview
 Creates:
 * aws_key_pair (from existing key pair file)
-* internet gateway
-* private and public route tables
-* private and public redundant subnets
-* route table associations
-* security groups
+* template_file for ec2 user-data
+* ec2 instances from amazon ami
 
 # Usage
 NOTE: Requires network module to work as we are referencing subnets, sgs and ips from there.
