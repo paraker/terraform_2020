@@ -27,8 +27,8 @@ data "template_file" "user-init" {
 }
 
 resource "aws_instance" "tf_server" {
-  count         = "${var.instance_count}"  # re-use count set by variable
-  instance_type = "${var.instance_type}"  #
+  count         = "${var.instance_count}"  # set count by variable from the root module
+  instance_type = "${var.instance_type}"  # set instance type by variable from the root module
   ami           = "${data.aws_ami.server_ami.id}"  # Defined above in this file
 
   tags {
@@ -38,5 +38,7 @@ resource "aws_instance" "tf_server" {
   key_name               = "${aws_key_pair.tf_auth.id}"  # Defined above in this file
   vpc_security_group_ids = ["${var.security_group}"]
   subnet_id              = "${element(var.subnets, count.index)}"  # element fetches the value at the specified index (count.index)
+  # Reference to the counted template_file rendered text is done with *.rendered[count.index]
+  # Translates to template_file.user-init.0.id then template_file.user-init.1.rendered
   user_data              = "${data.template_file.user-init.*.rendered[count.index]}"
 }
