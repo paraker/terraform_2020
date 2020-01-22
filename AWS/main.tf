@@ -28,3 +28,11 @@ module "compute" {
   security_group  = "${module.networking.public_sg}"
   subnet_ips      = "${module.networking.subnet_ips}"
 }
+
+resource "aws_s3_bucket" "state" {
+  bucket = "terraform-state-paak-123456"
+  acl = "private"
+  tags {
+    Name = "My state file for terraform course"
+  }
+}

@@ -1,6 +1,7 @@
 # Root Module overview
 * Instantiates AWS infrastructure from local modules.
-* Utilises terraform.tfvars to set variables for easy plan/apply.
+* Utilises `terraform.tfvars` to set variables for easy plan/apply.
+* Utilises terraform remote state, see `terraform.tf`.
 
 Assumes these three variables are set:
 
