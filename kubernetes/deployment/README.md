@@ -1,6 +1,7 @@
 # Overview
 Builds a `kubernetes_deployment` with ghost blog in it. <br>
 A deployment can contain multiple pods.<br>
+The deployment automatically re-deploys a pod if it is deleted!<br>
 Builds a `kubernetes_service` that exposes the pod publicly.<br>
 
 
