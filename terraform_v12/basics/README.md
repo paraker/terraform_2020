@@ -1,16 +1,15 @@
 # Summary
-Deploys docker image "hello-world locally" with terraform 0.12.
-<br>
-No code changes compared to 0.11 as far as I can remember.
+Deploys docker image "hello-world locally" with terraform 0.12.<br>
+If you have multiple versions of terraform installed, remember to use 0.12 to execute this code!
 
 # Usage
 Init and build
 
-    terraform init
-    terraform plan -out=tfplan
+    terraform12 init
+    terraform12 plan -out=tfplan  # Later I just got Error: Error pinging Docker server: Cannot connect to the Docker daemon at unix:///var/run/docker.sock
     Plan: 3 to add, 0 to change, 0 to destroy.
 
-    terraform apply
+    terraform12 apply  # This was actually run on tf 0.11... anyhow this is how it should work.
     Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
     
     # Test your hello world container
@@ -18,10 +17,10 @@ Init and build
 
  destroy the environment.  
  
-    terraform destroy
+    terraform12 destroy  # Was actually run on 0.11...
     Plan: 0 to add, 0 to change, 2 to destroy.
 
-    # We are getting errors here, not sure why.
+    # We are getting errors here, not sure why.   # Was also run on 0.11 here.
     # The image
     3 errors occurred:
         * module.container.output.ip: variable "container_id" is nil, but no error was reported
@@ -30,3 +29,31 @@ Init and build
 
 
         * module.container.output.container_name: variable "container_id" is nil, but no error was reported
+
+
+# Terraform 12 Changes
+## Interpolation syntax
+Interpolation syntax has changed from ${} to HCL2.
+    
+    # 0.11
+    value = "${docker_image.image_id.id}"
+
+    # 0.12
+    value = docker_image.image_id.id
+    
+## Variables types are not quoted anymore
+Terraform 0.11 and earlier required type constraints to be given in quotes,
+but that form is now deprecated and will be removed in a future version of
+Terraform. To silence this warning, remove the quotes around "string".
+    
+    # 0.11
+    variable "docker_image_name" {
+      type = "string"
+      default = "hello-world"
+    }
+    
+    # 0.12
+    variable "docker_image_name" {
+    type = string
+    default = "hello-world"
+    }
