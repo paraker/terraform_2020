@@ -7,7 +7,7 @@ resource "random_id" "tf_bucket_id" {
 
 # Create the bucket
 resource "aws_s3_bucket" "tf_code" {
-    bucket        = "${var.project_name}-${random_id.tf_bucket_id.dec}"
+    bucket        = format("%s-%d", var.project_name,  random_id.tf_bucket_id.dec) # Resource attribute is directly referenced with the format function
     acl           = "private"
 
     force_destroy =  true  # Destroys the bucket even if there are objects in it.

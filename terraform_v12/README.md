@@ -1,13 +1,6 @@
-# Storage module
-Takes a project name and creates an S3 bucket with a random id trailing the name.
-Outputs bucket name and bucket arn.
-
-# Usage
-    module "s3_bucket" {
-      source = "./modules/storage"
-      project_name = "${var.your_project_name}"
-    }
-
+# General
+This is in principle a subet of the same projects as the 0.11 terraform code one level up.<br>
+Changes are described below and in each of the individual project readmes
 # Terraform 0.12 Updates
 ## interpolation replaced with [format function](https://www.terraform.io/docs/configuration/functions/format.html)
 The specification is a string that includes formatting verbs that are introduced with the % character. <br>
