@@ -57,3 +57,5 @@ Terraform. To silence this warning, remove the quotes around "string".
     type = string
     default = "hello-world"
     }
+## Applies are abbreviated, plans are the same
+terraform apply will now only give a couple of summary lines of output. Full details are shown in terraform plan.

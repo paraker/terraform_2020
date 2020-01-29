@@ -5,7 +5,7 @@ Outputs bucket name and bucket arn.
 # Usage
     module "s3_bucket" {
       source = "./modules/storage"
-      project_name = "${var.your_project_name}"
+      project_name = "var.your_project_name"
     }
 
 # Terraform 0.12 Updates

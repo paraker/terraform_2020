@@ -7,6 +7,7 @@ resource "random_id" "tf_bucket_id" {
 
 # Create the bucket
 resource "aws_s3_bucket" "tf_code" {
+    # %s and %d are verbs in the format function, var.projecT_name and random_id.tf_bucket_id.dec are the variables replacing the verbs
     bucket        = format("%s-%d", var.project_name,  random_id.tf_bucket_id.dec) # Resource attribute is directly referenced with the format function
     acl           = "private"
 
