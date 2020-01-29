@@ -2,6 +2,9 @@
 This is in principle a subet of the same projects as the 0.11 terraform code one level up.<br>
 Changes are described below and in each of the individual project readmes
 # Terraform 0.12 Updates
+## Expressions
+### Dynamic Nested Blocks
+
 ## interpolation replaced with [format function](https://www.terraform.io/docs/configuration/functions/format.html)
 The specification is a string that includes formatting verbs that are introduced with the % character. <br>
 The function call must then have one additional argument for each verb sequence in the specification.<br>
