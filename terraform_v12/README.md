@@ -3,7 +3,10 @@ This is in principle a subet of the same projects as the 0.11 terraform code one
 Changes are described below and in each of the individual project readmes
 # Terraform 0.12 Updates
 ## Expressions
-### Dynamic Nested Blocks
+See "loops" section
+
+## Functions
+See "functions" section
 
 ## interpolation replaced with [format function](https://www.terraform.io/docs/configuration/functions/format.html)
 The specification is a string that includes formatting verbs that are introduced with the % character. <br>
@@ -22,8 +25,8 @@ See full list of verbs at [terraform docs](https://www.terraform.io/docs/configu
     resource "aws_s3_bucket" "tf_code" {
         bucket        = format("%s-%d", var.project_name, random_id.tf_bucket_id.dec)
         
-## S3 resource tags
-S3 resource tag syntax changed from straight open map to "= map".
+## resource tags
+resource tag syntax changed from straight open map to "= map".
     
     # 0.11
     tags {
