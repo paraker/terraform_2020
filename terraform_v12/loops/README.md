@@ -1,3 +1,97 @@
+# for loops
+The basic syntax of a for expression is:
+```
+[for <ITEM> in <LIST> : <OUTPUT>]
+```
+Where LIST is a list to loop over, ITEM is the local variable name to assign to each item in LIST, and OUTPUT is an expression that transforms ITEM in some way. For example, here is the Terraform code to convert the list of names in var.names to upper case:
+```
+variable "names" {
+  description = "A list of names"
+  type        = list(string)
+  default     = ["neo", "trinity", "morpheus"]
+}output "upper_names" {
+  value = [for name in var.names : upper(name)]
+}
+```
+If you run terraform apply on this code, you get the following output:
+```
+$ terraform applyApply complete! Resources: 0 added, 0 changed, 0 destroyed.Outputs:upper_names = [
+  "NEO",
+  "TRINITY",
+  "MORPHEUS",
+]
+```
+Just as with Python’s list comprehensions, you can filter the resulting list by specifying a condition:
+```
+variable "names" {
+  description = "A list of names"
+  type        = list(string)
+  default     = ["neo", "trinity", "morpheus"]
+}output "short_upper_names" {
+  value = [for name in var.names : upper(name) if length(name) < 5]
+}
+```
+Running terraform apply on this code gives you:
+```
+short_upper_names = [
+  "NEO",
+]
+```
+Terraform’s for expressions also allow you to loop over a map using the following syntax:
+```
+[for <KEY>, <VALUE> in <MAP> : <OUTPUT>]
+```
+Where MAP is a map to loop over, KEY and VALUE are the local variable names to assign to each key-value pair in MAP, and OUTPUT is an expression that transforms KEY and VALUE in some way. Here’s an example:
+```
+variable "hero_thousand_faces" {
+  description = "map"
+  type        = map(string)
+  default     = {
+    neo      = "hero"
+    trinity  = "love interest"
+    morpheus = "mentor"
+  }
+}output "bios" {
+  value = [for name, role in var.hero_thousand_faces : "${name} is the ${role}"]
+}
+```
+When you run terraform apply on this code, you get:
+```
+map_example = [
+  "morpheus is the mentor",
+  "neo is the hero",
+  "trinity is the love interest",
+]
+```
+You can also use for expressions to output a map rather than list using the following syntax:
+```
+# For looping over lists
+{for <ITEM> in <MAP> : <OUTPUT_KEY> => <OUTPUT_VALUE>}# For looping over maps
+{for <KEY>, <VALUE> in <MAP> : <OUTPUT_KEY> => <OUTPUT_VALUE>}
+```
+The only differences are that (a) you wrap the expression in curly braces rather than square brackets and (b) rather than outputting a single value each iteration, you output a key and value, separated by an arrow. For example, here is how you can transform map to make all the keys and values upper case:
+```
+variable "hero_thousand_faces" {
+  description = "map"
+  type        = map(string)
+  default     = {
+    neo      = "hero"
+    trinity  = "love interest"
+    morpheus = "mentor"
+  }
+}output "upper_roles" {
+  value = {for name, role in var.hero_thousand_faces : upper(name) => upper(role)}
+}
+```
+The output from running this code will be:
+```
+upper_roles = {
+  "MORPHEUS" = "MENTOR"
+  "NEO" = "HERO"
+  "TRINITY" = "LOVE INTEREST"
+}
+```
+
 # [Expressions](https://www.terraform.io/docs/configuration/expressions.html)
 ## TF Block Basics
 The syntax of the Terraform language consists of only a few basic elements:
