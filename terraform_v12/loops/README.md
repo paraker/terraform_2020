@@ -68,7 +68,9 @@ map_example = [
 You can also use for expressions to output a map rather than list using the following syntax:
 ```
 # For looping over lists
-{for <ITEM> in <MAP> : <OUTPUT_KEY> => <OUTPUT_VALUE>}# For looping over maps
+{for <ITEM> in <MAP> : <OUTPUT_KEY> => <OUTPUT_VALUE>}
+
+# For looping over maps
 {for <KEY>, <VALUE> in <MAP> : <OUTPUT_KEY> => <OUTPUT_VALUE>}
 ```
 The only differences are that (a) you wrap the expression in curly braces rather than square brackets and (b) rather than outputting a single value each iteration, you output a key and value, separated by an arrow. For example, here is how you can transform map to make all the keys and values upper case:
